@@ -8,7 +8,8 @@
 	"main": "src/index.ts",
 	"compatibility_date": "2025-09-27",
 	"compatibility_flags": [
-		"global_fetch_strictly_public"
+		"global_fetch_strictly_public",
+		"nodejs_compat_v2"
 	],
 	"assets": {
 		// The path to the directory containing the `index.html` file to be served at `/`
@@ -16,7 +17,39 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"secrets_store_secrets": [
+		{
+			"binding": "discord_client_id",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "discord_client_id"
+		},
+		{
+			"binding": "discord_client_secret",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "discord_client_secret"
+		},
+		{
+			"binding": "discord_redirect_uri",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "discord_redirect_uri"
+		},
+		{
+			"binding": "google_client_id",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "google_client_id"
+		},
+		{
+			"binding": "google_client_secret",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "google_client_secret"
+		},
+		{
+			"binding": "google_redirect_uri",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "google_redirect_uri"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
