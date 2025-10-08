@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Title</title>
 
 	<style>
@@ -11,8 +12,12 @@
 			height: 100vh;
 			overflow-x: hidden;
 			overflow-y: auto;
-			max-width: 964px;
 			margin: 0 auto;
+			max-width: 1800px;
+		}
+
+		.parallax::-webkit-scrollbar {
+			display: none;
 		}
 
 		.parallax__layer {
@@ -24,11 +29,29 @@
 		}
 		.parallax__layer.base {
 			transform: translateZ(0);
+			max-width: 964px;
+			margin: 0 auto;
 		}
 
-		.parallax__layer.back {
-			transform: translateZ(-1px) scale(3.5);
+		@media screen and (max-width: 767px) {
+			.parallax__layer.back {
+				transform: translateZ(-1px) scale(3.5);
+			}
 		}
+
+		@media screen and (max-width: 414px) {
+			.parallax__layer.back {
+				transform: translateZ(-1px) scale(2.5);
+			}
+		}
+
+		@media screen and (min-width: 768px) {
+			.parallax__layer.back {
+				transform: translateZ(-1px) scale(5);
+			}
+		}
+
+
 
 		.background {
 			background: url(res/bg.png) no-repeat center center fixed;
@@ -48,9 +71,17 @@
 			font-size: 60px;
 		}
 
+		@media screen and (max-width: 767px) {
+			.base > * {
+				width: 99%;
+				font-size: 30px;
+			}
+		}
+
 		.dialog_left {
 			position: relative;
 			background: url("res/p-general.png") no-repeat;
+			background-size: contain;
 			aspect-ratio: 735 / 354;
 		}
 
@@ -63,6 +94,7 @@
 		.dialog_right {
 			position: relative;
 			background: url("res/p-circle.png") no-repeat;
+			background-size: contain;
 			aspect-ratio: 756 / 349;
 		}
 
@@ -75,6 +107,7 @@
 		.dialog_new{
 			position: relative;
 			background: url("res/new.png") no-repeat;
+			background-size: contain;
 			aspect-ratio: 654 / 595;
 		}
 
