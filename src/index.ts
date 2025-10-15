@@ -10,6 +10,7 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
+import {WorkerMailer} from "worker-mailer";
 
 export default {
 
@@ -18,16 +19,25 @@ export default {
 		const url = new URL(request.url);
 		const url_base = `${url.protocol}//${url.host}`;
 
-		const discord_client_id = await env.discord_client_id.get();
-		const discord_client_secret = await env.discord_client_secret.get();
-		const discord_redirect_uri = `${url_base}${await env.discord_redirect_uri.get()}`;
+		if (url.pathname.startsWith("/api/discord/")||url.pathname.startsWith("/api/google/")){
+			const discord_client_id = await env.discord_client_id.get();
+			const discord_client_secret = await env.discord_client_secret.get();
+			const discord_redirect_uri = `${url_base}${await env.discord_redirect_uri.get()}`;
 
-		const google_client_id = await env.google_client_id.get();
-		const google_redirect_uri = `${url_base}${await env.google_redirect_uri.get()}`;
-		const google_client_secret = await env.google_client_secret.get();
+			const google_client_id = await env.google_client_id.get();
+			const google_redirect_uri = `${url_base}${await env.google_redirect_uri.get()}`;
+			const google_client_secret = await env.google_client_secret.get();
+		}
+
 
 
 		switch (url.pathname) {
+			case '/remote-info':
+				const info = {
+					"env":env,
+					"headers":request.headers
+				}
+				return new Response('remote:'+request.headers.get('x-forwarded-for'));
 			case '/test/url':
 				return new Response(`host: ${url.host}
 				hostname: ${url.hostname}
@@ -45,6 +55,15 @@ export default {
 			case '/api/google/callback':
 				let google_code = url.searchParams.get('code') ?? "";
 				return new Response(await redirectGoogleLogin(google_code,google_client_id,google_client_secret,google_redirect_uri));
+
+			case '/api/gmail/send':
+
+				const params = await request.formData()
+				const to = params.get('to') as string ?? "";
+				const subject = params.get('subject') as string ?? "";
+				const text = params.get('text') as string ?? "";
+
+				return await sendMail(to.split(","),subject,text);
 			default:
 				return new Response('Not Found', { status: 404 });
 		}
@@ -136,4 +155,28 @@ async function redirectGoogleLogin(code:string,client_id:string,client_secret:st
 	let google_name = tokenInfo.name;
 
 	return JSON.stringify(tokenInfo,null,2);
+}
+
+const gmail_password = 'ydideqzbehleotrc';
+
+async function sendMail(to:string[],subject:string,text:string){
+	const transport = await WorkerMailer.connect({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		authType: 'plain',
+		credentials: {
+			username: 'kemokemo0904@gmail.com',
+			password: gmail_password
+		}
+	});
+
+	await transport.send({
+		from:{name:"希爾獸畜",email:'kemokemo0904@gmail.com'},
+		to:to,
+		subject:subject,
+		text:text,
+	});
+
+	return new Response('send success');
 }

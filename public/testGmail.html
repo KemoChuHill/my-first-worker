@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hello, World!</title>
+	</head>
+	<body>
+		<h1 id="heading">Email測試</h1>
+
+		<form action="/api/gmail/send" method="post">
+			<label>
+				To:
+				<input name="to" type="text" placeholder="email(多組email請用英文半形逗號隔開)">
+			</label><br>
+			<label>
+				標題:
+				<input name="subject" type="text">
+			</label><br>
+			<label>
+				內容:<br>
+				<textarea name="text" rows="10" cols="30"></textarea>
+			</label><br>
+			<button type="submit">送出</button>
+		</form>
+
+	</body>
+</html>
