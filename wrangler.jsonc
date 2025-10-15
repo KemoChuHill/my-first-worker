@@ -49,6 +49,16 @@
 			"binding": "google_redirect_uri",
 			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
 			"secret_name": "google_redirect_uri"
+		},
+		{
+			"binding": "service_email",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "service_email"
+		},
+		{
+			"binding": "service_email_key",
+			"store_id": "5bb486c2ed2c4d8d8f143ef2fe6231fb",
+			"secret_name": "service_email_key"
 		}
 	]
 	/**

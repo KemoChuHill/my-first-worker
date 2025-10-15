@@ -75,6 +75,7 @@ export default class {
 export class DiscordUser {
 	id:string = "";
 	username:string = "";
+	global_name:string = "";
 	avatar:string | null | undefined = null;
 	email:string | null = null;
 	verified:boolean = false;

@@ -21,7 +21,7 @@ export default class {
 		return `https://accounts.google.com/o/oauth2/v2/auth?client_id=${await client_id}&redirect_uri=${encodeURI(await redirect_uri)}&response_type=code&scope=${scope.join('+')}`
 	}
 
-	async getUser(code:string):Promise<Object|Error>{
+	async getUser(code:string):Promise<GoogledUser|Error>{
 
 		let client_id = env.google_client_id.get();
 		let client_secret = env.google_client_secret.get();
@@ -57,17 +57,15 @@ export default class {
 		const tokenInfoResponse = await fetch(reqTokenInfo);
 		const tokenInfo = JSON.parse(await tokenInfoResponse.text());
 
-		let google_id = tokenInfo.sub;
-		let google_email = tokenInfo.email;
-		let google_name = tokenInfo.name;
-
-		return tokenInfo;
-
-		/*{
-			id: google_id,
-			name: google_name,
-			email: google_email
-		};*/
+		return {
+			id: tokenInfo.sub,
+			name: tokenInfo.email,
+			email: tokenInfo.name,
+			email_verified: tokenInfo.email_verified,
+			picture: tokenInfo.picture,
+			given_name: tokenInfo.given_name,
+			family_name: tokenInfo.family_name,
+		}
 	}
 
 }
@@ -76,4 +74,8 @@ export class GoogledUser {
 	id:string = "";
 	name:string = "";
 	email:string | null = null;
+	email_verified:boolean = false;
+	picture:string | null = null;
+	given_name:string | null = null;
+	family_name:string | null = null;
 }
