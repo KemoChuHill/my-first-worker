@@ -19,17 +19,23 @@ export default {
 		const url = new URL(request.url);
 		const url_base = `${url.protocol}//${url.host}`;
 
+		let discord_client_id = "";
+		let discord_client_secret = "";
+		let discord_redirect_uri = "";
+
+		let google_client_id = "";
+		let google_redirect_uri = "";
+		let google_client_secret = "";
+
 		if (url.pathname.startsWith("/api/discord/")||url.pathname.startsWith("/api/google/")){
-			const discord_client_id = await env.discord_client_id.get();
-			const discord_client_secret = await env.discord_client_secret.get();
-			const discord_redirect_uri = `${url_base}${await env.discord_redirect_uri.get()}`;
+			discord_client_id = await env.discord_client_id.get();
+			discord_client_secret = await env.discord_client_secret.get();
+			discord_redirect_uri = `${url_base}${await env.discord_redirect_uri.get()}`;
 
-			const google_client_id = await env.google_client_id.get();
-			const google_redirect_uri = `${url_base}${await env.google_redirect_uri.get()}`;
-			const google_client_secret = await env.google_client_secret.get();
+			google_client_id = await env.google_client_id.get();
+			google_redirect_uri = `${url_base}${await env.google_redirect_uri.get()}`;
+			google_client_secret = await env.google_client_secret.get();
 		}
-
-
 
 		switch (url.pathname) {
 			case '/remote-info':
