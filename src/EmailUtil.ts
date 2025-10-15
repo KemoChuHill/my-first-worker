@@ -17,7 +17,7 @@ export default class EmailUtil {
 			authType: 'plain',
 			credentials: {
 				username: fromEmail ,
-				password:await env.service_key.get()
+				password:await env.service_email_key.get()
 			}
 		});
 
